@@ -20,18 +20,19 @@ A public repository that appears related to an uploaded archive is **not assumed
 | Donor family | Evidence available | Runtime / framework | License / provenance | High-value lessons | Reuse posture |
 |---|---|---|---|---|---|
 | **Drippy Modern / late Coolware Modern** | Uploaded `Drippy-Modern-AUDIT.zip`; prior project authority exists, but the fresh ZIP could not be unpacked by the current chat archive backend | Prior authority: standalone/direct-host 1.8.9 modernization rather than normal Forge runtime | Mixed lineage; fresh pack not yet provenance-verified | Performance instrumentation, hot-path ownership, renderer batching/caching, direct-host migration, launcher/runtime separation | **Reference until fresh audit pack is readable** |
-| **VapeV4.21 recovery** | Uploaded clean-source ZIP + connected `Trexzo/VapeV4.21` | Java payload + Windows x64 native/JVMTI/JNI injection; ASM/Javassist; cross-version bridge | Recovery repo uses CC0 only to the extent contributors actually own the material; README explicitly says it is not official Vape source | Classloader isolation, relocated bytecode tooling, injection payload verification, Java 8 compatibility checks | **Research/reference; only contributor-owned original recovery glue is even a possible reuse candidate** |
+| **VapeV4.21 recovery** | Uploaded clean-source ZIP + connected `Trexzo/VapeV4.21` | Java payload + Windows x64 JNI/JVMTI bridge; JDK 17 build toolchain; payload can be compiled to Java 8 bytecode; ASM/Javassist are shaded into client namespace | Recovery repo uses CC0 only to the extent contributors actually own the material; README explicitly says it is not official Vape source | Classloader isolation, dependency shading, payload completeness checks, Java-version verification, cross-version mapping boundaries | **Research/reference; only clearly contributor-owned recovery glue is even a possible reuse candidate** |
 | **OpenMyau+** | Uploaded source + runtime JAR + connected `Trexzo/OpenMyau-Plus` | Forge 1.8.9, Java 8, Mixin 0.7.11, access transformer, Essential/Architectury Loom | GPLv3 | Compact Forge/Mixin build, one-JAR packaging, ViaVersion family integration, command-driven scripting bridge, explicit upstream provenance for vendored RSL | **Copyleft reference unless target project intentionally becomes GPL** |
 | **Myau+ compiled runtime** | Uploaded `Myau+.jar-2.1+4.jar` | Compiled 1.8.9 Forge client | Follows OpenMyau+ lineage but exact binary parity not yet statically verified | Source-vs-runtime parity target, packaging footprint | **Binary parity/reference only until static comparison is possible** |
 | **OpenOnyx / deobfuscated Onyx** | Uploaded OpenOnyx source ZIP + deobfuscated archive; public OpenOnyx recovery project located | Supplied JDK 21 runtime with recovered 1.8.9 client; source launcher separate from recovered source tree | Recovered/decompiled proprietary lineage; source tree is explicitly decompiler output | Excellent responsibility boundaries: combat controller, aim controller, rotation manager, target filters, typed settings, render/HUD separation | **Reference only** |
-| **Rise 6.9.5** | Uploaded archive + public recovered/deobfuscated source ecosystem | Standalone recovered client; JDK 21-era workspace; centralized managers and shader render manager | Recovered/decompiled proprietary client; source contains proprietary copyright notices | Strongest broad architecture reference: event/module/component/command/config/theme/script/keybind managers, staged shader rendering, dual ClickGUI approaches, async tasks | **Reference only** |
-| **Yuri** | Uploaded source + connected `Trexzo/Yuri` | Direct `net.minecraft.client.main.Main` 1.8.9 launch, ShadowJar, LWJGL2, ImGui bindings; bundled Java 8 distribution | MIT at repo level, but README acknowledges snippets from other clients | Direct-launch packaging, minimal standalone distribution, ImGui-on-LWJGL2 integration | **Potentially reusable only file-by-file after lineage check** |
-| **KRS** | Uploaded source + connected `Trexzo/Krs` | Minecraft 26.2, Fabric, Java 25, ImGui + NanoVG + STB | GPLv3 | Modern UI/render stack, access widener, split environment source sets, modern Fabric packaging | **Copyleft reference** |
+| **Rise 6.9.5** | Uploaded archive + public recovered/deobfuscated source ecosystem | Standalone recovered client; JDK 21-era workspace; centralized managers and shader render manager | Recovered/decompiled proprietary client; source contains proprietary copyright notices | Strong broad architecture reference: event/module/component/command/config/theme/script/keybind managers, staged shader rendering, dual ClickGUI approaches, async tasks | **Reference only** |
+| **Yuri** | Uploaded source + connected `Trexzo/Yuri` | Direct `net.minecraft.client.main.Main` 1.8.9 launch, ShadowJar, LWJGL2, ImGui bindings; bundled Java 8 distribution | Repository is MIT, **but its README explicitly acknowledges snippets from other clients** | Direct-launch packaging, reconstructed 1.8.9 runtime dependency set, minimal standalone distribution, ImGui-on-LWJGL2 integration | **Potentially reusable only file-by-file after provenance check; architecture is safer than wholesale copying** |
+| **KRS** | Uploaded source + connected `Trexzo/Krs` | Minecraft 26.2, Fabric Loader 0.19.3, Java 25, ImGui + NanoVG + STB | GPLv3 | Modern UI/render stack, access widener, split environment source sets, fat-jar library handling | **Copyleft reference** |
 | **FDPClient B17** | Uploaded B17 archive + public official project/release notes | Forge 1.8.9, Mixin, Java/Kotlin; LiquidBounce-derived | GPLv3 | Very rich typed setting system, rename-safe config aliases, UI search, glyph caching, theme unification, persistent pre-warmed web ClickGUI, async asset delivery | **Copyleft reference; adapt ideas, not code** |
-| **LibreBounce** | Uploaded source + connected `Trexzo/LibreBounce` | Forge 1.8.9, Java/Kotlin JVM8, Mixin/coremod, LiquidBounce Legacy lineage | GPLv3 | Mature mixin injection, refactored LiquidBounce-style framework, explicit separation from Mojang source, config/event/module organization | **Copyleft reference** |
+| **LibreBounce** | Uploaded source + connected `Trexzo/LibreBounce` | Forge 1.8.9, Java/Kotlin JVM8, Mixin/coremod, LiquidBounce Legacy lineage | GPLv3; README additionally warns that development/compilation may involve source to which the project has no rights | Mature mixin injection, refactored LiquidBounce-style framework, explicit separation from Mojang source, config/event/module organization | **Copyleft/reference only; extra provenance caution beyond GPL itself** |
 | **Raven bS / bS+** | Uploaded bS JAR + bS+ source archive; related public RavenBS++ project located | Forge 1.8.9; public related project builds with JDK 21 | Related RavenBS++ project is MIT, but exact uploaded bS/bS+ lineage has not been proven identical | Lightweight module/client patterns and scripting ecosystem; useful contrast to heavier frameworks | **Potentially reusable only after exact lineage/license verification; otherwise reference** |
-| **OpenAbyss** | Uploaded source + connected `Trexzo/OpenAbyss` | Forge 1.8.9, Java 8, LaunchWrapper, ASM coremod | Recovered/decrypted source; no top-level license found in connected repo audit | Coremod/ASM mechanics, recovered semantics, legacy client structure | **Reference only** |
-| **OpenExpo** | Uploaded binary archive; related public `NoHackClient/OpenExpo` exists | Exact uploaded runtime not yet inspected | Public related project is MIT; exact uploaded archive identity not proven | Possible additional open 1.8.9 implementation reference | **Do not reuse until exact lineage is established** |
+| **OpenAbyss** | Uploaded source + connected `Trexzo/OpenAbyss` | Java 8, LaunchWrapper, ASM coremod; manifest declares `Abyss.ASM.CoreMod`; build uses compile-only legacy MC/Forge libraries | Recovered/decrypted source; no top-level license found in connected repo | Coremod/ASM mechanics, recovered semantics, legacy launch structure | **Reference only** |
+| **OpenExpo** | Uploaded binary archive; connected `Trexzo/OpenExpo` currently exposes no verified root build/license metadata in this audit | Exact uploaded runtime not yet inspected | Exact uploaded archive identity/license not proven | Possible additional implementation reference if unique behavior is demonstrated | **Reference only until exact lineage is established** |
+| **Legacy Coolware / Project-Coolware** | Connected `Trexzo/Project-Coolware` + historical source/packages | Forge 1.8.9, Java 8, ForgeGradle 2.1, Mixin 0.7.11, reflection-based discovery, generated event-bus source | No top-level license found in connected repo | Historical UX/module behavior; examples of what the new foundation should simplify | **Reference only unless individual provenance is established** |
 | **Flux-main** | Uploaded large source archive + connected `Trexzo/Flux` with minimal README | Exact architecture not yet established from accessible source | License not established in connected repo pass | Secondary comparison donor | **Reference pending verification** |
 | **Breeze** | Uploaded `Breeze.jar hackvshack.net.zip` | Exact version/runtime not statically inspected | Cracked/binary provenance | UX, scripting/config behavior may be worth observing | **Black-box reference only** |
 | **Timewarp** | Uploaded cracked archive | Exact runtime not statically inspected | Cracked/binary provenance | Only use if it demonstrates a genuinely unique behavior/UX idea | **Black-box reference only** |
@@ -49,27 +50,42 @@ The scripting bridge is notable because RSL does not need a compile-time depende
 
 ### Yuri
 
-Yuri is the strongest currently verified direct-launch source donor. Its Gradle application entry is Minecraft's `net.minecraft.client.main.Main`, and its dependency list reconstructs the needed 1.8.9 runtime libraries directly rather than making Forge the client shell.
+Yuri is the strongest currently verified direct-launch source donor. Its Gradle application entry and final JAR manifest both point directly at Minecraft's `net.minecraft.client.main.Main`, and the project declares the legacy 1.8.9 runtime libraries itself instead of using Forge as the shell.
 
-That is architecturally closer to the late Drippy direction than the Forge-based donors. Yuri also demonstrates ImGui bindings on the LWJGL2 generation used by 1.8.9.
+That is architecturally close to the late Drippy direction and therefore highly relevant to the clean-room host boundary. Yuri also demonstrates ImGui bindings on LWJGL2.
+
+The MIT license makes Yuri more permissive than most donors, but the README's statement that snippets from other hacked clients were used means **MIT at repository level is not enough to treat every file as clean-origin source**. Any code-level reuse would need a file-by-file provenance pass.
 
 ### KRS
 
-KRS is intentionally a modern-generation comparison point rather than a 1.8.9 host donor: its connected source targets Minecraft 26.2, Fabric Loader 0.19.3 and Java 25. It combines ImGui with NanoVG and STB font support.
+KRS is intentionally a modern-generation comparison point rather than a 1.8.9 host donor. Its connected source targets Minecraft 26.2, Fabric Loader 0.19.3 and Java 25, with split environment source sets and an access widener.
 
-The useful lesson is renderer/UI composition: immediate-mode controls can coexist with a vector rendering path and dedicated font stack. We should not import its GPL code into a non-GPL core.
+Its UI stack combines ImGui, NanoVG and STB. That makes it useful for studying modern renderer/UI composition, but GPLv3 means implementation should not be copied into a permissively licensed core.
+
+### LibreBounce
+
+LibreBounce is a Forge 1.8.9 / Java-Kotlin / Mixin coremod fork in the LiquidBounce Legacy family. Its README explicitly explains the advantage of injection over shipping Mojang source.
+
+It also contains an unusually important provenance warning: the GPL applies to source directly in the clean repository, while additional source may be used during development/compilation to which the maintainers state they have no rights. For the clean-room project this means LibreBounce is a **concept donor only**, even beyond the normal GPL restriction.
 
 ### Legacy Coolware
 
 Legacy Coolware is valuable historically but its core plumbing should not become the new foundation:
 
-- module discovery uses runtime reflection,
+- ForgeGradle 2.1 / Java 8 is the permanent shell,
+- module and command discovery use runtime reflection,
 - module settings are reflected fields,
 - module lifecycle directly triggers config writes and notifications,
-- command discovery is reflective,
-- the custom event bus is generated from source scanning in `build.gradle`.
+- the custom event bus is generated by scanning source from `build.gradle`,
+- the connected repository has no top-level license.
 
-The new client can preserve the familiar module/category/keybind UX while using explicit registries, deterministic lifecycle ownership and a separate persistence layer.
+The new client can preserve familiar module/category/keybind UX while using explicit registries, deterministic lifecycle ownership and a separate persistence layer.
+
+### OpenAbyss
+
+OpenAbyss is a recovered/decrypted Java 8 project using LaunchWrapper and an ASM coremod rather than a clean modern injection boundary. Its build manifest declares `Abyss.ASM.CoreMod` and the build expects legacy Minecraft/Forge libraries as compile-only inputs.
+
+This makes it useful for understanding old transformation responsibilities, but not attractive as a foundation. The absence of a repository license further keeps it firmly in reference-only territory.
 
 ### Rise 6.9.5
 
@@ -91,9 +107,18 @@ Its embedded-browser GUI is interesting UX research but is not the default direc
 
 ### Vape recovery
 
-The Vape recovery project is valuable as an interop laboratory, not as the target architecture. It validates an injection payload, shades/relocates ASM and Javassist to survive hostile classloader boundaries, can emit Java 8-compatible bytecode, and has a native bridge for loading into existing JVMs.
+The Vape recovery project is valuable as an interop laboratory, not as the target architecture. Its build:
 
-A from-scratch launcher/client does not need that complexity if it owns the launch process, but the classloader and verification lessons are useful for any future plugin/compatibility layer.
+- uses JDK 17 as the build toolchain,
+- can target Java 8 class files for legacy Minecraft,
+- produces a self-contained injection payload,
+- relocates ASM and Javassist under the client namespace to avoid classloader conflicts,
+- verifies required classes/packages and rejects Java 9+ bytecode when targeting Java 8,
+- pairs the Java payload with a Windows x64 JNI/JVMTI bridge.
+
+Those verification and isolation techniques are worth reproducing where relevant. The native injection architecture itself is unnecessary for the primary client if our launcher owns process creation.
+
+The repository's CC0 notice is deliberately limited to material its contributors actually have rights to, and the README explicitly says the project is recovered research rather than official source. Therefore the project is not treated as a blanket permissive code donor.
 
 ## Candidate lessons — not architecture decisions yet
 
@@ -108,14 +133,17 @@ The audit currently favors these ideas:
 - **A clean scripting/plugin boundary** modeled conceptually on Myau+/Raven's loose coupling, but with a typed API.
 - **Modern UI experiments** can borrow concepts from KRS's ImGui/NanoVG composition without importing GPL implementation.
 - **Direct-launch packaging** should be tested against Yuri and Drippy behavior before choosing the final 1.8.9 host strategy.
+- **Build-time verification gates** should borrow the idea—not implementation—from Vape recovery: bytecode-level compatibility, dependency-completeness and classloader-boundary checks should be automated in CI.
+- **Provenance is a per-file property**, not something inferred solely from a repository's root license.
 
 ## Audit blockers / uncertainty
 
-The current chat archive backend is registering all uploaded ZIP/JAR files but is failing to expose ZIP internals for direct static extraction. Therefore:
+The current chat archive backend is registering all uploaded ZIP/JAR files but is failing to expose ZIP internals for direct static extraction. The model-side container is also currently unavailable for local archive inspection. Therefore:
 
 - no claim is made that a public repo is byte-for-byte identical to an uploaded archive;
 - no claim is made about an archive-only donor's exact module list or license unless separately source-backed;
 - none of the uploaded binaries have been executed;
-- Drippy's fresh audit pack still needs exact static verification before its late runtime state is treated as fresh authority.
+- Drippy's fresh audit pack still needs exact static verification before its late runtime state is treated as fresh authority;
+- exact uploaded Raven/OpenExpo/Flux/binary-only lineage remains unresolved.
 
-This uncertainty must be resolved before the donor audit is marked complete and before donor-specific implementation is copied or translated.
+This uncertainty must be resolved before the donor audit is marked complete and before any donor-specific implementation is translated into the new client.
