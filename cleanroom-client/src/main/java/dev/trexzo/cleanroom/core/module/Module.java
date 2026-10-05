@@ -41,7 +41,7 @@ public abstract class Module {
             } else {
                 onDisable();
             }
-        } catch (RuntimeException failure) {
+        } catch (RuntimeException | Error failure) {
             enabled = !requested;
             throw failure;
         }
