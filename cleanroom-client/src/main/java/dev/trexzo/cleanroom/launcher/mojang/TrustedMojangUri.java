@@ -8,6 +8,8 @@ public final class TrustedMojangUri {
     private static final Set<String> ALLOWED_HOSTS = Set.of(
             "piston-meta.mojang.com",
             "piston-data.mojang.com",
+            "launcher.mojang.com",
+            "launchermeta.mojang.com",
             "libraries.minecraft.net",
             "resources.download.minecraft.net");
 
