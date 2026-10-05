@@ -148,7 +148,8 @@ public final class MojangVersionMetadataParser {
         return new DownloadSpec(
                 TrustedMojangUri.requireTrustedHttps(requiredString(object, "url")),
                 requiredString(object, "sha1"),
-                requiredLong(object, "size"));
+                requiredLong(object, "size"),
+                optionalString(object, "path", null));
     }
 
     private static JsonObject requiredObject(JsonObject parent, String key) {
