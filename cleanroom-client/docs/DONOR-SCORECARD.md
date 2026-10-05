@@ -14,13 +14,13 @@ Legend:
 | Donor | Host | Core | Render | Perf | Config | Ext | Reuse | Current role |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
 | Drippy Modern | 5 | 4 | 5 | 5 | 3 | 1 | 1 | Primary prior performance/runtime authority; fresh pack still needs static verification |
-| Yuri | 5 | 3 | 4 | 3 | 2 | 1 | 3 | Best verified permissive direct-launch 1.8.9 source reference; repo-level MIT is tempered by mixed-snippet provenance warning |
+| Yuri | 5 | 3 | 4 | 3 | 2 | 1 | 1 | Strong direct-launch host-shape reference; embedded Mojang source and mixed snippets prevent treating the tree as MIT-clean |
 | Rise 6.9.5 | 4 | 5 | 5 | 4 | 5 | 4 | 0 | Broad architecture/render/UX reference only |
 | OpenOnyx | 4 | 5 | 5 | 4 | 4 | 1 | 0 | Responsibility-boundary and visual reference |
 | OpenMyau+ | 2 | 4 | 4 | 3 | 4 | 5 | 1 | Compact Forge/Mixin + scripting reference |
-| KRS | 2 | 4 | 5 | 4 | 3 | 2 | 1 | Modern Fabric/ImGui/NanoVG reference; GPL |
-| FDPClient B17 | 2 | 4 | 5 | 4 | 5 | 3 | 1 | Best typed-config and mature GUI feature reference |
-| Raven bS/bS+ | 2 | 3 | 3 | 3 | 3 | 4 | 2 | Lightweight/module/scripting comparison; exact lineage unresolved |
+| KRS | 2 | 4 | 5 | 4 | 4 | 2 | 1 | Modern renderer plus routed event snapshots, lifecycle rollback and atomic config-write reference; GPL |
+| FDPClient B17 | 2 | 4 | 5 | 5 | 5 | 3 | 1 | Best typed-config plus deterministic verification/provenance build-gate reference |
+| Raven bS/bS+ | 2 | 3 | 3 | 3 | 4 | 5 | 1 | Strong scripting/profile integration reference; exact uploaded lineage/license unresolved |
 | LibreBounce | 2 | 4 | 3 | 3 | 4 | 2 | 0 | Mature LiquidBounce-style mixin framework reference; GPL plus explicit extra provenance warning |
 | Vape recovery | 1 | 3 | 2 | 3 | 3 | 2 | 1 | Injection/classloader/build-verification laboratory; recovered-source caveat dominates CC0 label |
 | Legacy Coolware | 2 | 2 | 3 | 2 | 2 | 1 | 0 | Historical UX/behavior source; reflection/generated-bus architecture rejected |
