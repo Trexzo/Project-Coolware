@@ -36,8 +36,14 @@ public final class Setting<T> {
         return defaultValue;
     }
 
+    public void validate(T candidate) {
+        Objects.requireNonNull(candidate, "candidate");
+        if (!validator.test(candidate)) {
+            throw new IllegalArgumentException("Invalid value for setting " + id + ": " + candidate);
+        }
+    }
+
     public void set(T requested) {
-        Objects.requireNonNull(requested, "requested");
         validate(requested);
         if (Objects.equals(value, requested)) {
             return;
@@ -48,12 +54,6 @@ public final class Setting<T> {
 
     public void reset() {
         set(defaultValue);
-    }
-
-    private void validate(T candidate) {
-        if (!validator.test(candidate)) {
-            throw new IllegalArgumentException("Invalid value for setting " + id + ": " + candidate);
-        }
     }
 
     private static String requireId(String id) {
