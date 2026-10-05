@@ -49,10 +49,11 @@ public final class HttpArtifactDownloader implements ArtifactCache.Downloader {
                 }
 
                 if (isRedirect(status)) {
-                    String location = response.headers()
-                            .firstValue("location")
-                            .orElseThrow(() -> new IOException("Redirect without Location from " + current));
-                    current = TrustedMojangUri.requireTrustedHttps(current.resolve(location));
+                    var locationHeader = response.headers().firstValue("location");
+                    if (locationHeader.isEmpty()) {
+                        throw new IOException("Redirect without Location from " + current);
+                    }
+                    current = TrustedMojangUri.requireTrustedHttps(current.resolve(locationHeader.get()));
                     continue;
                 }
 
