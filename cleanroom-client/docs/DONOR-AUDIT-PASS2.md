@@ -126,3 +126,32 @@ The source-backed evidence now supports this target split:
 - Exact uploaded Raven lineage/license still needs verification.
 - OpenExpo/Flux and archive-only donors still need unique-value triage.
 - Rise/OpenOnyx remain high-value design references but recovered/proprietary implementation stays reference-only.
+
+
+## Flux
+
+Repository: `Trexzo/Flux`
+
+Verified:
+
+- Maven project describing itself as a Minecraft 1.8.9 utility client.
+- Compiler source/target are Java 17.
+- Declared main class is `Start`.
+- Declares the legacy 1.8.9-era Authlib, Netty, LWJGL2 and Paulscode sound stack directly.
+
+Architecture consequence:
+
+Flux belongs in the standalone-host comparison group rather than the Forge/Mixin group. It is useful for comparing dependency ownership and direct-launch packaging, but no license authority was established in this pass, so implementation remains reference-only.
+
+## OpenExpo
+
+Repository: `Trexzo/OpenExpo`
+
+Verified:
+
+- GitHub currently returns HTTP 451 for repository content and identifies the block reason as DMCA, created 2026-09-30.
+- Therefore the connected repository cannot serve as a source or licensing authority for this audit.
+
+Architecture consequence:
+
+The uploaded OpenExpo archive stays black-box/reference-only. No implementation from it will be selected for clean-room reuse, and no architectural claim will be promoted unless it can be established independently.
