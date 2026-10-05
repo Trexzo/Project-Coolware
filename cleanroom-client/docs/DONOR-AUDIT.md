@@ -25,7 +25,7 @@ A public repository that appears related to an uploaded archive is **not assumed
 | **Myau+ compiled runtime** | Uploaded `Myau+.jar-2.1+4.jar` | Compiled 1.8.9 Forge client | Follows OpenMyau+ lineage but exact binary parity not yet statically verified | Source-vs-runtime parity target, packaging footprint | **Binary parity/reference only until static comparison is possible** |
 | **OpenOnyx / deobfuscated Onyx** | Uploaded OpenOnyx source ZIP + deobfuscated archive; public OpenOnyx recovery project located | Supplied JDK 21 runtime with recovered 1.8.9 client; source launcher separate from recovered source tree | Recovered/decompiled proprietary lineage; source tree is explicitly decompiler output | Excellent responsibility boundaries: combat controller, aim controller, rotation manager, target filters, typed settings, render/HUD separation | **Reference only** |
 | **Rise 6.9.5** | Uploaded archive + public recovered/deobfuscated source ecosystem | Standalone recovered client; JDK 21-era workspace; centralized managers and shader render manager | Recovered/decompiled proprietary client; source contains proprietary copyright notices | Strong broad architecture reference: event/module/component/command/config/theme/script/keybind managers, staged shader rendering, dual ClickGUI approaches, async tasks | **Reference only** |
-| **Yuri** | Uploaded source + connected `Trexzo/Yuri` | Direct `net.minecraft.client.main.Main` 1.8.9 launch, ShadowJar, LWJGL2, ImGui bindings; bundled Java 8 distribution | Repository is MIT, **but its README explicitly acknowledges snippets from other clients** | Direct-launch packaging, reconstructed 1.8.9 runtime dependency set, minimal standalone distribution, ImGui-on-LWJGL2 integration | **Potentially reusable only file-by-file after provenance check; architecture is safer than wholesale copying** |
+| **Yuri** | Uploaded source + connected `Trexzo/Yuri` | Direct `net.minecraft.client.main.Main` 1.8.9 launch, ShadowJar, LWJGL2, ImGui bindings; bundled Java 8 distribution | Repository says MIT, but README acknowledges snippets from other clients **and the tree contains Minecraft/Mojang source such as `net.minecraft.client.main.Main`** | Direct-launch shape, legacy runtime dependency set, minimal distribution, ImGui-on-LWJGL2 integration | **Architecture/reference only by default; any original file would require file-level provenance review** |
 | **KRS** | Uploaded source + connected `Trexzo/Krs` | Minecraft 26.2, Fabric Loader 0.19.3, Java 25, ImGui + NanoVG + STB | GPLv3 | Modern UI/render stack, access widener, split environment source sets, fat-jar library handling | **Copyleft reference** |
 | **FDPClient B17** | Uploaded B17 archive + public official project/release notes | Forge 1.8.9, Mixin, Java/Kotlin; LiquidBounce-derived | GPLv3 | Very rich typed setting system, rename-safe config aliases, UI search, glyph caching, theme unification, persistent pre-warmed web ClickGUI, async asset delivery | **Copyleft reference; adapt ideas, not code** |
 | **LibreBounce** | Uploaded source + connected `Trexzo/LibreBounce` | Forge 1.8.9, Java/Kotlin JVM8, Mixin/coremod, LiquidBounce Legacy lineage | GPLv3; README additionally warns that development/compilation may involve source to which the project has no rights | Mature mixin injection, refactored LiquidBounce-style framework, explicit separation from Mojang source, config/event/module organization | **Copyleft/reference only; extra provenance caution beyond GPL itself** |
@@ -119,6 +119,61 @@ The Vape recovery project is valuable as an interop laboratory, not as the targe
 Those verification and isolation techniques are worth reproducing where relevant. The native injection architecture itself is unnecessary for the primary client if our launcher owns process creation.
 
 The repository's CC0 notice is deliberately limited to material its contributors actually have rights to, and the README explicitly says the project is recovered research rather than official source. Therefore the project is not treated as a blanket permissive code donor.
+
+### Code-level donor findings added after the structural pass
+
+#### KRS hot-path dispatch and lifecycle
+
+KRS is stronger as an engineering reference than its modern-version mismatch initially suggested.
+
+Its module registry is explicit, but setting fields are discovered once and cached. More importantly, its event manager does only registration-time route discovery and then publishes immutable listener-array snapshots. Hot-path event dispatch therefore becomes indexed array iteration rather than reflective invocation. Module enablement also has rollback behavior if `onEnable()` throws, and shutdown explicitly unregisters/disposes listeners.
+
+Its config manager contributes several useful persistence ideas:
+
+- separate module and bind profiles,
+- filename normalization and Windows reserved-name handling,
+- maximum config size bounds,
+- asynchronous online-profile generation tokens to reject stale responses,
+- UTF-8 writes through a temporary file,
+- `force(true)` followed by atomic move where supported.
+
+Those ideas are good clean-room candidates. KRS's settings-field reflection and GPL implementation are not.
+
+KRS's NanoVG renderer also uses bounded queues and swaps producer/frame deques instead of copying queued work. That queue ownership model is useful. Its broad `glGet*` state snapshotting, however, conflicts with the late-Drippy goal of avoiding synchronous GL readbacks on hot render paths, so that part is specifically rejected for the 1.8.9 renderer.
+
+#### Rise acquisition, registration and shader staging
+
+Rise's recovered build demonstrates a useful **runtime acquisition** pattern: it can fetch the official Minecraft 1.8.9 version metadata/client/assets, verify expected SHA-1 values, provision natives/assets, and support an existing local Minecraft install.
+
+That is substantially better than committing Mojang assets. However, the recovered project still compiles/packages against a committed `libs/minecraft-deobf.jar` and merges that jar into the client output. The new client must not reproduce that packaging choice.
+
+Rise's runtime architecture separates modules, components, commands, configs, themes, scripts, keybinds, bot state and shader rendering. Its shader manager keeps independent queues by shader type and render domain, drains them at render boundaries, and clears them deterministically afterward. This is the strongest verified reference for staged blur/bloom/overlay composition in the current donor set.
+
+The recovered client also contains reflection-based package discovery paths, so the manager boundaries are useful while reflection scanning is not.
+
+#### OpenOnyx shared services
+
+The recovered Onyx source confirms that rotation, aiming and combat packet/state coordination are separate responsibilities rather than incidental logic hidden inside one module. `KillAura` owns references to `CombatController` and `AimController`; `RotationManager` centralizes the rotation state seen by movement/protocol consumers; typed settings support predicates/visibility and JSON serialization.
+
+The specific recovered implementation is not reusable, but this strongly supports a clean-room design in which rotation, target selection and combat action sequencing are shared services with explicit lifecycle/state snapshots.
+
+#### Raven scripting and profiles
+
+The public Raven bS+ comparator uses explicit module registration and indexes modules by exact name, normalized name and class. Its scripting system compiles scripts into module-like objects and uses a constrained classloader/import model. Profiles can resolve both built-in and script-provided modules and stage desired enabled/keybind/hidden state during load.
+
+That makes Raven the strongest current **scripting sandbox/profile integration** reference. Exact lineage/license parity with the uploaded bS/bS+ archives is still unresolved, so implementation remains reference-only until provenance is proven.
+
+#### FDP verification discipline
+
+FDP B17 contributes more than typed settings. Its build includes deterministic foundation verification tasks, SHA-256 verification for bundled libraries, and a class-file-major-version gate that fails the fat-JAR build if Java 9+ bytecode would make Forge 1.8.9's ASM5 reject the client.
+
+Those are excellent CI concepts for the clean-room project: validate runtime compatibility and artifact provenance before release rather than discovering them at launch time.
+
+#### Yuri provenance correction
+
+Yuri remains a valuable proof that a 1.8.9 client can be launched directly without making Forge the permanent shell. But the source tree itself contains Minecraft classes, including `net.minecraft.client.main.Main`, in addition to the README's acknowledgement of snippets from other clients.
+
+Therefore the repository-level MIT file cannot be treated as permission for the whole tree. Yuri is now a **host-shape/reference donor**, not a generally reusable source donor. The clean-room host must acquire the user's legitimate Minecraft runtime and apply our own integration layer rather than copying Yuri's embedded game source.
 
 ## Candidate lessons — not architecture decisions yet
 
