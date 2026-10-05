@@ -22,13 +22,28 @@ public record MojangVersionMetadata(
         libraries = List.copyOf(Objects.requireNonNull(libraries, "libraries"));
     }
 
-    public record DownloadSpec(URI uri, String sha1, long size) {
+    public record DownloadSpec(URI uri, String sha1, long size, String relativePath) {
+        public DownloadSpec(URI uri, String sha1, long size) {
+            this(uri, sha1, size, null);
+        }
+
         public DownloadSpec {
             uri = TrustedMojangUri.requireTrustedHttps(uri);
             sha1 = MojangManifestParser.requireSha1(sha1);
             if (size < 0) {
                 throw new IllegalArgumentException("Download size must not be negative: " + size);
             }
+            if (relativePath != null) {
+                relativePath = validateRelativePath(relativePath);
+            }
+        }
+
+        private static String validateRelativePath(String path) {
+            if (path.isBlank() || path.startsWith("/") || path.startsWith("\\")
+                    || path.contains("\\") || path.contains("..")) {
+                throw new IllegalArgumentException("Unsafe artifact relative path: " + path);
+            }
+            return path;
         }
     }
 
